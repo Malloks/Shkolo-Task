@@ -1,17 +1,5 @@
 <?php
-// Include database connection file
-require 'db_connect.php';
-
-// Fetch button configurations from the database
-$sql = "SELECT * FROM button_configurations";
-$result = $conn->query($sql);
-
-$buttonConfigs = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $buttonConfigs[$row['button_index']] = $row;
-    }
-}
+// Include any PHP logic here if needed (e.g., database connections, session handling)
 ?>
 
 <!DOCTYPE html>
@@ -23,33 +11,61 @@ if ($result->num_rows > 0) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <form action="insert_data.php" method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <button type="submit">Submit</button>
+    </form>
+    
     <div class="grid-container">
         <!-- 9 Cells for buttons -->
-        <?php for ($i = 1; $i <= 9; $i++): ?>
-            <div class="grid-item" id="cell-<?php echo $i; ?>">
-                <button class="grid-button" id="btn-<?php echo $i; ?>"></button>
-                <button class="edit-button" id="edit-<?php echo $i; ?>"></button>
-                <button class="delete-button" id="del-<?php echo $i; ?>"></button>
-            </div>
-        <?php endfor; ?>
+        <div class="grid-item" id="cell-1">
+            <button class="grid-button" id="btn-1"></button>
+            <button class="edit-button" id="edit-1"></button>
+            <button class="delete-button" id="del-1"></button>
+        </div>
+        <div class="grid-item" id="cell-2">
+            <button class="grid-button" id="btn-2"></button>
+            <button class="edit-button" id="edit-2"></button>
+            <button class="delete-button" id="del-2"></button>
+        </div>
+        <div class="grid-item" id="cell-3">
+            <button class="grid-button" id="btn-3"></button>
+            <button class="edit-button" id="edit-3"></button>
+            <button class="delete-button" id="del-3"></button>
+        </div>
+        <div class="grid-item" id="cell-4">
+            <button class="grid-button" id="btn-4"></button>
+            <button class="edit-button" id="edit-4"></button>
+            <button class="delete-button" id="del-4"></button>
+        </div>
+        <div class="grid-item" id="cell-5">
+            <button class="grid-button" id="btn-5"></button>
+            <button class="edit-button" id="edit-5"></button>
+            <button class="delete-button" id="del-5"></button>
+        </div>
+        <div class="grid-item" id="cell-6">
+            <button class="grid-button" id="btn-6"></button>
+            <button class="edit-button" id="edit-6"></button>
+            <button class="delete-button" id="del-6"></button>
+        </div>
+        <div class="grid-item" id="cell-7">
+            <button class="grid-button" id="btn-7"></button>
+            <button class="edit-button" id="edit-7"></button>
+            <button class="delete-button" id="del-7"></button>
+        </div>
+        <div class="grid-item" id="cell-8">
+            <button class="grid-button" id="btn-8"></button>
+            <button class="edit-button" id="edit-8"></button>
+            <button class="delete-button" id="del-8"></button>
+        </div>
+        <div class="grid-item" id="cell-9">
+            <button class="grid-button" id="btn-9"></button>
+            <button class="edit-button" id="edit-9"></button>
+            <button class="delete-button" id="del-9"></button>
+        </div>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            <?php foreach ($buttonConfigs as $index => $config): ?>
-                const button = document.getElementById('btn-<?php echo $index; ?>');
-                button.style.backgroundColor = '<?php echo $config['color']; ?>';
-                button.textContent = '<?php echo $config['title']; ?>';
-                button.dataset.url = '<?php echo $config['url']; ?>';
-                
-                const editButton = document.getElementById('edit-<?php echo $index; ?>');
-                const deleteButton = document.getElementById('del-<?php echo $index; ?>';
-                
-                editButton.style.display = 'block';
-                deleteButton.style.display = 'block';
-            <?php endforeach; ?>
-        });
-    </script>
 </body>
 </html>
