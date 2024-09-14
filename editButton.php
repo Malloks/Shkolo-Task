@@ -1,30 +1,27 @@
 <?php
-include 'db_connect.php';
+// Database connection setup
+$host = 'localhost';
+$db = 'your_database';
+$user = 'your_username';
+$pass = 'your_password';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $buttonIndex = intval($_POST['button-index']);
-    $title = pg_escape_string($_POST['title']);
-    $url = pg_escape_string($_POST['url']);
-    $color = pg_escape_string($_POST['color']);
+$pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
 
-    // Check if button exists
-    $query = "SELECT * FROM buttons WHERE id = $buttonIndex";
-    $result = pg_query($conn, $query);
+// Collect POST data
+$title = $_POST['title'];
+$url = $_POST['url'];
+$color = $_POST['color'];
+$buttonIndex = $_POST['button-index'];
 
-    if (pg_num_rows($result) > 0) {
-        // Update existing button
-        $query = "UPDATE buttons SET title = '$title', url = '$url', color = '$color' WHERE id = $buttonIndex";
-    } else {
-        // Insert new button
-        $query = "INSERT INTO buttons (id, title, url, color) VALUES ($buttonIndex, '$title', '$url', '$color')";
-    }
+// Prepare SQL statement
+$sql = "INSERT INTO button_configurations (button_index, title, url, color) VALUES (:button_index, :title, :url, :color) ON DUPLICATE KEY UPDATE title = :title, url = :url, color = :color";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([
+    ':button_index' => $buttonIndex,
+    ':title' => $title,
+    ':url' => $url,
+    ':color' => $color
+]);
 
-    $result = pg_query($conn, $query);
-
-    if ($result) {
-        echo "Button configuration saved successfully!";
-    } else {
-        echo "Error saving button configuration: " . pg_last_error();
-    }
-}
+echo "Button configuration updated successfully.";
 ?>
