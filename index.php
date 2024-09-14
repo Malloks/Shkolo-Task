@@ -1,14 +1,14 @@
 <?php
-// Include the database connection file
+// Include database connection file
 require 'db_connect.php';
 
 // Fetch button configurations from the database
 $sql = "SELECT * FROM button_configurations";
-$result = pg_query($conn, $sql);
+$result = $conn->query($sql);
 
 $buttonConfigs = [];
-if (pg_num_rows($result) > 0) {
-    while ($row = pg_fetch_assoc($result)) {
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
         $buttonConfigs[$row['button_index']] = $row;
     }
 }
